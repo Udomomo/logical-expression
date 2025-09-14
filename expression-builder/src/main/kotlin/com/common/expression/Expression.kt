@@ -1,0 +1,54 @@
+package com.common.expression
+
+sealed class Expression {
+    abstract fun evaluate(): Value
+    abstract fun toScript(): String
+
+    @ConsistentCopyVisibility
+    data class BinaryExpression internal constructor (
+        private val left: Expression,
+        private val operator: BinaryOperator,
+        private val right: Expression,
+    ): Expression() {
+        override fun evaluate() = operator(left, right)
+
+        override fun toScript(): String {
+            val rightExpressionScript = when (right) {
+                is Value -> right.toScript()
+                else -> "(${right.toScript()})"
+            }
+
+            return left.toScript() + operator.toScript() + rightExpressionScript
+        }
+    }
+
+    @ConsistentCopyVisibility
+    data class UnaryExpression internal constructor (
+        private val expression: Expression,
+        private val operator: UnaryOperator,
+    ): Expression() {
+        override fun evaluate() = operator(expression)
+
+        override fun toScript(): String {
+            val expressionScript = when (expression) {
+                is Value -> expression.toScript()
+                else -> "(${expression.toScript()})"
+            }
+            return operator.toScript() + expressionScript
+        }
+    }
+
+    sealed class Value: Expression() {
+        object TRUE: Value() {
+           override val name = "TRUE"
+        }
+
+        object FALSE: Value() {
+            override val name = "FALSE"
+        }
+
+        abstract val name: String
+        override fun evaluate(): Value = this
+        override fun toScript(): String = this.name
+    }
+}
