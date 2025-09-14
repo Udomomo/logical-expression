@@ -13,12 +13,12 @@ sealed class Expression {
         override fun evaluate() = operator(left, right)
 
         override fun toScript(): String {
-            val rightExpressionScript = when (right) {
-                is Value -> right.toScript()
-                else -> "(${right.toScript()})"
-            }
+            return "${toScriptAsChild(left)} ${operator.toScript()} ${toScriptAsChild(right)}"
+        }
 
-            return left.toScript() + operator.toScript() + rightExpressionScript
+        private fun toScriptAsChild(expression: Expression) = when (expression) {
+            is Value -> expression.toScript()
+            else -> "(${expression.toScript()})"
         }
     }
 
@@ -34,7 +34,7 @@ sealed class Expression {
                 is Value -> expression.toScript()
                 else -> "(${expression.toScript()})"
             }
-            return operator.toScript() + expressionScript
+            return "${operator.toScript()} $expressionScript"
         }
     }
 
