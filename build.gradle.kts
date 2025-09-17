@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":expression-builder"))
     testImplementation(kotlin("test"))
 }
 

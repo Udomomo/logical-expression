@@ -64,6 +64,7 @@ enum class UnaryOperator(private val value: String) : Operator {
     };
 
     abstract fun execute(expression: Expression): Value
+
     fun toScript() = value
 
     operator fun invoke(expression: Expression) = execute(expression)
