@@ -18,5 +18,5 @@ fun Expression.nand(other: Expression) =
 fun Expression.not() =
     Expression.UnaryExpression(this, UnaryOperator.NOT)
 
-typealias TRUE = Expression.Value.TRUE
-typealias FALSE = Expression.Value.FALSE
+typealias TRUE = Expression.Value.TRUEVAL
+typealias FALSE = Expression.Value.FALSEVAL

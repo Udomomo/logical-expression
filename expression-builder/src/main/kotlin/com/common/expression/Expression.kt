@@ -39,11 +39,11 @@ sealed class Expression {
     }
 
     sealed class Value: Expression() {
-        object TRUE: Value() {
+        object TRUEVAL: Value() {
            override val name = "TRUE"
         }
 
-        object FALSE: Value() {
+        object FALSEVAL: Value() {
             override val name = "FALSE"
         }
 
