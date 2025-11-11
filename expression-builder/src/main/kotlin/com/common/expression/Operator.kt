@@ -1,71 +1,71 @@
 package com.common.expression
 
-import com.common.expression.Expression.Value
+import com.common.expression.ExpressionImpl.ValueImpl
 
-sealed interface Operator
+internal sealed interface Operator
 
-enum class BinaryOperator(private val value: String) : Operator {
+internal enum class BinaryOperator(private val value: String) : Operator {
     AND("AND") {
-        override fun execute(left: Expression, right: Expression): Value {
-            if (left.evaluate() == Value.TRUEVAL && right.evaluate() == Value.TRUEVAL) {
-                return Value.TRUEVAL
+        override fun execute(left: ExpressionImpl, right: ExpressionImpl): ValueImpl {
+            if (left.evaluate() == ValueImpl.TRUE && right.evaluate() == ValueImpl.TRUE) {
+                return ValueImpl.TRUE
             }
-            return Value.FALSEVAL
+            return ValueImpl.FALSE
         }
     },
     OR("OR") {
-        override fun execute(left: Expression, right: Expression): Value {
-            if (left.evaluate() == Value.TRUEVAL || right.evaluate() == Value.TRUEVAL) {
-                return Value.TRUEVAL
+        override fun execute(left: ExpressionImpl, right: ExpressionImpl): ValueImpl {
+            if (left.evaluate() == ValueImpl.TRUE || right.evaluate() == ValueImpl.TRUE) {
+                return ValueImpl.TRUE
             }
-            return Value.FALSEVAL
+            return ValueImpl.FALSE
         }
     },
     XOR("XOR") {
-        override fun execute(left: Expression, right: Expression): Value {
+        override fun execute(left: ExpressionImpl, right: ExpressionImpl): ValueImpl {
             return if (left.evaluate() != right.evaluate()) {
-                Value.TRUEVAL
+                ValueImpl.TRUE
             } else {
-                Value.FALSEVAL
+                ValueImpl.FALSE
             }
         }
     },
     NOR("NOR") {
-        override fun execute(left: Expression, right: Expression): Value {
-            if (left.evaluate() == Value.FALSEVAL && right.evaluate() == Value.FALSEVAL) {
-                return Value.TRUEVAL
+        override fun execute(left: ExpressionImpl, right: ExpressionImpl): ValueImpl {
+            if (left.evaluate() == ValueImpl.FALSE && right.evaluate() == ValueImpl.FALSE) {
+                return ValueImpl.TRUE
             }
-            return Value.FALSEVAL
+            return ValueImpl.FALSE
         }
     },
     NAND("NAND") {
-        override fun execute(left: Expression, right: Expression): Value {
-            if (left.evaluate() == Value.TRUEVAL && right.evaluate() == Value.TRUEVAL) {
-                return Value.FALSEVAL
+        override fun execute(left: ExpressionImpl, right: ExpressionImpl): ValueImpl {
+            if (left.evaluate() == ValueImpl.TRUE && right.evaluate() == ValueImpl.TRUE) {
+                return ValueImpl.FALSE
             }
-            return Value.TRUEVAL
+            return ValueImpl.TRUE
         }
     };
 
-    abstract fun execute(left: Expression, right: Expression): Value
+    abstract fun execute(left: ExpressionImpl, right: ExpressionImpl): ValueImpl
     fun toScript() = value
 
     // 関数呼び出し演算子を定義し、operator()の形式で呼び出せるようにする
-    operator fun invoke(left: Expression, right: Expression) = execute(left, right)
+    operator fun invoke(left: ExpressionImpl, right: ExpressionImpl) = execute(left, right)
 }
 
-enum class UnaryOperator(private val value: String) : Operator {
+internal enum class UnaryOperator(private val value: String) : Operator {
     NOT("NOT") {
-        override fun execute(expression: Expression) =
-            when (expression.evaluate()) {
-                Value.TRUEVAL -> Value.FALSEVAL
-                Value.FALSEVAL -> Value.TRUEVAL
+        override fun execute(expressionImpl: ExpressionImpl) =
+            when (expressionImpl.evaluate()) {
+                ValueImpl.TRUE -> ValueImpl.FALSE
+                ValueImpl.FALSE -> ValueImpl.TRUE
         }
     };
 
-    abstract fun execute(expression: Expression): Value
+    abstract fun execute(expressionImpl: ExpressionImpl): ValueImpl
 
     fun toScript() = value
 
-    operator fun invoke(expression: Expression) = execute(expression)
+    operator fun invoke(expressionImpl: ExpressionImpl) = execute(expressionImpl)
 }

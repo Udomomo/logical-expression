@@ -1,22 +1,28 @@
 package com.common.expression
 
+// TODO: カッコに対応する
+
+/**
+ * Expressionクラスのビルダー。パッケージ外に公開している。
+ */
 fun Expression.and(other: Expression) =
-    Expression.BinaryExpression(this, BinaryOperator.AND, other)
+    Expression(ExpressionImpl.BinaryExpressionImpl(this.expr, BinaryOperator.AND, other.expr))
 
 fun Expression.or(other: Expression) =
-    Expression.BinaryExpression(this, BinaryOperator.OR, other)
+    Expression(ExpressionImpl.BinaryExpressionImpl(this.expr, BinaryOperator.OR, other.expr))
 
 fun Expression.xor(other: Expression) =
-    Expression.BinaryExpression(this, BinaryOperator.XOR, other)
+    Expression(ExpressionImpl.BinaryExpressionImpl(this.expr, BinaryOperator.XOR, other.expr))
 
 fun Expression.nor(other: Expression) =
-    Expression.BinaryExpression(this, BinaryOperator.NOR, other)
+    Expression(ExpressionImpl.BinaryExpressionImpl(this.expr, BinaryOperator.NOR, other.expr))
 
 fun Expression.nand(other: Expression) =
-    Expression.BinaryExpression(this, BinaryOperator.NAND, other)
+    Expression(ExpressionImpl.BinaryExpressionImpl(this.expr, BinaryOperator.NAND, other.expr))
 
 fun Expression.not() =
-    Expression.UnaryExpression(this, UnaryOperator.NOT)
+    Expression(ExpressionImpl.UnaryExpressionImpl(this.expr, UnaryOperator.NOT))
 
-typealias TRUE = Expression.Value.TRUEVAL
-typealias FALSE = Expression.Value.FALSEVAL
+val TRUE get() = Expression(ExpressionImpl.ValueImpl.TRUE)
+
+val FALSE get() = Expression(ExpressionImpl.ValueImpl.FALSE)
