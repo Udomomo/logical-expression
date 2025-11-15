@@ -1,4 +1,4 @@
-package com.common.parser
+package com.common.tokenizer
 
 enum class Token(val value: String) {
     AND("AND"),

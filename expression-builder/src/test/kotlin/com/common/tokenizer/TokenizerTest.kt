@@ -1,12 +1,12 @@
-package com.common.parser
+package com.common.tokenizer
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class ParserTest {
+class TokenizerTest {
     @Test
-    @DisplayName("入力した式を正しくパースできること")
+    @DisplayName("入力した式を正しくtokenに変換できること")
     fun `should correctly parse input`() {
         val input = "TRUE AND ( FALSE OR NOT TRUE )"
         val expectedTokens = listOf(
@@ -19,12 +19,12 @@ class ParserTest {
             Token.TRUE,
             Token.RPAREN
         )
-        val actualTokens = Parser.parse(input)
+        val actualTokens = Tokenizer.execute(input)
         Assertions.assertEquals(actualTokens, expectedTokens)
     }
 
     @Test
-    @DisplayName("入力した式で、カッコと値にスペースがなくても正しくパースできること")
+    @DisplayName("入力した式で、カッコと値にスペースがなくても正しくtokenに変換できること")
     fun `should correctly parse input when parenthesis is not split`() {
         val input = "TRUE AND (FALSE OR NOT TRUE)"
         val expectedTokens = listOf(
@@ -37,12 +37,12 @@ class ParserTest {
             Token.TRUE,
             Token.RPAREN
         )
-        val actualTokens = Parser.parse(input)
+        val actualTokens = Tokenizer.execute(input)
         Assertions.assertEquals(actualTokens, expectedTokens)
     }
 
     @Test
-    @DisplayName("入力した式が小文字でも正しくパースできること")
+    @DisplayName("入力した式が小文字でも正しくtokenに変換できること")
     fun `should correctly parse input when value and operator is lowercase`() {
         val input = "true and ( false or not true )"
         val expectedTokens = listOf(
@@ -55,7 +55,7 @@ class ParserTest {
             Token.TRUE,
             Token.RPAREN
         )
-        val actualTokens = Parser.parse(input)
+        val actualTokens = Tokenizer.execute(input)
         Assertions.assertEquals(actualTokens, expectedTokens)
     }
 }

@@ -1,10 +1,8 @@
-package com.common.parser
+package com.common.tokenizer
 
-import com.common.expression.Expression
-
-// 最終的にExpressionBuilderを使ってExpressionを組み立てる
-object Parser {
-    fun parse(input: String): List<Token> {
+// 入力された文字列をtokenに変換する
+object Tokenizer {
+    fun execute(input: String): List<Token> {
         val tokens = input
             .split(" ")
             .separateParenthesis()
@@ -15,7 +13,7 @@ object Parser {
 
         return tokens
 
-        // 操車場アルゴリズムで式を作れるか試してみる。
+        // parserで、操車場アルゴリズムで式を作れるか試してみる。
         // テストを先に書きながら検証した方が良さそう。
         TODO("Not yet implemented")
     }
