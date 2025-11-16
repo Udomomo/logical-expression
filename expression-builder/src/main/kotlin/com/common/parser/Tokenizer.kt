@@ -1,4 +1,4 @@
-package com.common.tokenizer
+package com.common.parser
 
 // 入力された文字列をtokenに変換する
 object Tokenizer {
@@ -24,16 +24,16 @@ object Tokenizer {
     private fun List<String>.separateParenthesis(): List<String> =
         this.flatMap { token ->
             when {
-                token == Token.LPAREN.value || token == Token.RPAREN.value ->
+                token == Operator.LPAREN.value || token == Operator.RPAREN.value ->
                     listOf(token)
-                token == Token.LPAREN.value + Token.RPAREN.value ->
-                    listOf(Token.LPAREN.value, Token.RPAREN.value)
-                token.startsWith(Token.LPAREN.value) && token.endsWith(Token.RPAREN.value) -> 
-                    listOf(Token.LPAREN.value, token.substring(1, token.length - 1), Token.RPAREN.value)
-                token.startsWith(Token.LPAREN.value) -> 
-                    listOf(Token.LPAREN.value, token.substring(1))
-                token.endsWith(Token.RPAREN.value) -> 
-                    listOf(token.dropLast(1), Token.RPAREN.value)
+                token == Operator.LPAREN.value + Operator.RPAREN.value ->
+                    listOf(Operator.LPAREN.value, Operator.RPAREN.value)
+                token.startsWith(Operator.LPAREN.value) && token.endsWith(Operator.RPAREN.value) ->
+                    listOf(Operator.LPAREN.value, token.substring(1, token.length - 1), Operator.RPAREN.value)
+                token.startsWith(Operator.LPAREN.value) ->
+                    listOf(Operator.LPAREN.value, token.substring(1))
+                token.endsWith(Operator.RPAREN.value) ->
+                    listOf(token.dropLast(1), Operator.RPAREN.value)
                 else -> listOf(token)
             }
         }
