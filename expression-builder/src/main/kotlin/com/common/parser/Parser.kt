@@ -15,9 +15,21 @@ class Parser {
                 parse(token)?.let { result.add(it) }
             }
         }
+
+
+        // 最後のOperatorがstackに1つ残っているはずなのでpushする。
+        // カッコが閉じているかとoperatorを使い切ったかはここで確認するが、
+        // 操車場アルゴリズムは、組み立てた式のバリデーションをするものではないため、この後の評価の段階でエラーになればよいものとする。
         while (operatorStack.isNotEmpty()) {
-            result.add(operatorStack.pop())
+            val remainedOperator = operatorStack.pop()
+            // カッコが残っていた場合はカッコが閉じていないので、その場合は例外を返す。
+            if (remainedOperator in listOf(Operator.LPAREN, Operator.RPAREN)) {
+                throw IllegalStateException("Unmatched Parenthesis: $remainedOperator")
+            }
+
+            result.add(remainedOperator)
         }
+        require(operatorStack.isEmpty()) { "Operator remains in stack: $operatorStack" }
         return result
     }
 
@@ -74,7 +86,7 @@ class Parser {
                 poppedOperators.add(top)
             }
         }
-        // TODO: カスタム例外に置き換える
+
         throw IllegalStateException("Unmatched right parenthesis")
     }
 }

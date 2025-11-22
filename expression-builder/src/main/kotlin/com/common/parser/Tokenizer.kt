@@ -12,10 +12,6 @@ object Tokenizer {
             }
 
         return tokens
-
-        // parserで、操車場アルゴリズムで式を作れるか試してみる。
-        // テストを先に書きながら検証した方が良さそう。
-        TODO("Not yet implemented")
     }
 
     /**
