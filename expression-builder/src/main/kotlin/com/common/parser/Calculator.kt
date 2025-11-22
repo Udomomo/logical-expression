@@ -1,7 +1,7 @@
 package com.common.parser
 
 /**
- * Stringで入力された式を解釈して評価する。このクラスとメソッドは利用者に公開する。
+ * Stringで入力された式を解釈して評価する。このクラスとメソッドはパッケージ外に公開している。
  */
 object Calculator {
     fun run(input: String): String {

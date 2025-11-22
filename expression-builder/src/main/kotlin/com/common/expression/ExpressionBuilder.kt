@@ -1,7 +1,5 @@
 package com.common.expression
 
-// TODO: カッコに対応する
-
 /**
  * Expressionクラスのビルダー。パッケージ外に公開している。
  */
