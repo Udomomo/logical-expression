@@ -1,7 +1,7 @@
 package com.common.parser
 
 // 入力された文字列をtokenに変換する
-object Tokenizer {
+internal object Tokenizer {
     fun execute(input: String): List<Token> {
         val tokens = input
             .split(" ")

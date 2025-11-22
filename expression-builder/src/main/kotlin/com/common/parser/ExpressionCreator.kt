@@ -14,7 +14,7 @@ import java.util.Stack
 /**
  * パース済みのtokenリストから、ExpressionBuilderを使ってExpressionを作る。
  */
-object ExpressionCreator {
+internal object ExpressionCreator {
     fun create(tokens: List<Token>): Expression {
         // Parserで操車場アルゴリズムを使ったことで、Stackを用いて前から順番に処理できる。
         var intermediate = Stack<Expression>()

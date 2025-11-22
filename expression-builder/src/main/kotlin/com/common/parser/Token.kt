@@ -1,6 +1,6 @@
 package com.common.parser
 
-sealed interface Token {
+internal sealed interface Token {
     val value: String
 
     companion object {
@@ -14,7 +14,7 @@ sealed interface Token {
     }
 }
 
-enum class Operator(override val value: String) : Token {
+internal enum class Operator(override val value: String) : Token {
     AND("AND"),
     OR("OR"),
     XOR("XOR"),
@@ -25,7 +25,7 @@ enum class Operator(override val value: String) : Token {
     RPAREN(")");
 }
 
-enum class Value(override val value: String) : Token {
+internal enum class Value(override val value: String) : Token {
     TRUE("TRUE"),
     FALSE("FALSE");
 }

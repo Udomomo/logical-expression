@@ -2,7 +2,7 @@ package com.common.parser
 
 import java.util.Stack
 
-class Parser {
+internal class Parser {
     private val operatorStack = Stack<Operator>()
 
     fun execute(inputs: List<Token>): List<Token> {
